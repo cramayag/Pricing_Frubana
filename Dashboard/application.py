@@ -7,9 +7,6 @@ from dash import Input, Output, dcc, html
 import dash_auth
 #from dash.dependencies import Input, Ouput, State
 
-# VALID_USERNAME_PASSWORD_PAIRS = {
-#    'GACS': 'GACS'
-#}
 
 #Images of this page
 Uniandes_logo = "https://github.com/Andresbeltran200/logo_despliegue_dash/blob/main/Uniandes.png?raw=true"
@@ -23,11 +20,7 @@ app = dash.Dash(
     external_stylesheets=[dbc.themes.MORPH, dbc.icons.FONT_AWESOME],
     requests_pathname_prefix=request_path_prefix
 )
-#auth = dash_auth.BasicAuth(
-#    app,
-#    VALID_USERNAME_PASSWORD_PAIRS
-#)
- 
+
 #Title of Main Page
 logo = html.Div(
             html.Img(src=Uniandes_logo, style={"width": "150px","height": "70px"})
@@ -80,21 +73,7 @@ sidebar = html.Div(
                     href="/Recomendacion", style={"height": "100px"},
                     active="exact",
                 ),
-                #dbc.NavLink(
-                #    [html.I(className="fas fa-dog me-2"), html.Span("Mascotas"), html.H6("Perros",className="anexos"), 
-                #    html.H6("Gatos",className="anexos")],
-                #    href="/Mascotas", style={"height": "100px"},
-                #    active="exact",
-                #),
-                
-                #dbc.NavLink(
-                #    [
-                #        html.I(className="fas fa-people-group me-2"),
-                #        html.Span("Nosotros"),
-                #    ],
-                #    href="/Nosotros",
-                #    active="exact",
-                #),
+
             ],
             vertical=True,
             pills=True,
@@ -122,8 +101,6 @@ app.layout = dbc.Container([
     ]), 
 ])
 
-# Call to external function to register all callbacks
-#register_callbacks(app)
 
 # This call will be used with Gunicorn server
 application = app.server

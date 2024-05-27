@@ -19,20 +19,10 @@ import plotly.graph_objects as go
 # dash-labs plugin call, menu name and route
 register_page(__name__, path='/Prediccion')
 
-#Definition of map the contract
-
-
-
 #Import dataframe graphs
 
-df_edad_sexo = pd.read_csv("data/Edad_sexo.csv", delimiter =";", encoding ='utf-8')
-df_TIPACCID_count = pd.read_csv("data/TIPACCID_count.csv", delimiter =",", encoding ='utf-8') 
-diasemana_count = pd.read_csv("data/DIASEMANA_count.csv", delimiter =",", encoding ='utf-8') 
-temp_df2 = pd.read_csv("data/GeneroEdad.csv")
-
-
 df_pct = pd.read_csv("data/df_pct.csv")
-# Datos de ejemplo
+
 fechas = df_pct['fecha']
 pct_dif = df_pct['pct_Dif']
 fig_pct = go.Figure()
@@ -70,83 +60,6 @@ fig_top.update_layout(title='Top 10 Productos con Mayor Promedio de Diferencia',
 
 fig_top.layout.plot_bgcolor = 'rgba(0,0,0,0)'
 fig_top.layout.paper_bgcolor = 'rgba(0,0,0,0)'
-
-
-
-fig_pie = px.pie(pd.read_csv("data/SEXO_count.csv"), values='y', names='x',
-             labels={'y':'Porcentaje accidentes',
-             'x':'Sexo'}
-             #, title="Sexo del conductor"
-             )
-
-fig_pie.update_traces(hole=.3, textposition='inside', textinfo='percent')
-fig_pie.update_layout(font=dict(
-        size=10
-      ))
-
-fig_pie.layout.plot_bgcolor = 'rgba(0,0,0,0)'
-fig_pie.layout.paper_bgcolor = 'rgba(0,0,0,0)'
-
-
-#Funtion for the tipo de accidente 
-def act_contract(data, tipo_contrato):
-    fig_act_contract = px.bar(data, x="x", y="y", height=450,
-            labels={
-                "x":"Tipo de accidente",
-                "y":"Número de fallecidos o heridos"
-            }).update_xaxes(tickangle=290)
-    fig_act_contract.update_layout(xaxis={"tickfont":{"size":8}})
-    fig_act_contract.update_layout(yaxis={"tickfont":{"size":10}})
-    fig_act_contract.layout.plot_bgcolor = 'rgba(0,0,0,0)'
-    fig_act_contract.layout.paper_bgcolor = 'rgba(0,0,0,0)'
-
-    return fig_act_contract
-
-# Grafico de dia de la semana
-fig_sem = px.bar(diasemana_count, x="x", y="y", 
-             #color="z", 
-             color = "z",
-             title="Personas heridas y fallecidas por dia de la semana en accidente",
-             labels={"x":"Dia semana", "y":"Conteo" }) 
-fig_sem.layout.plot_bgcolor = 'rgba(0,0,0,0)'
-fig_sem.layout.paper_bgcolor = 'rgba(0,0,0,0)'
-
-
-#Grafico sexo
-fig_gen2 = go.Figure()
-fig_gen2.add_trace(go.Bar(x=-temp_df2["Mujer"].values,
-                    y=temp_df2["RangoEdad"],
-                    orientation='h',
-                    name="Mujer",
-                    customdata=temp_df2['Mujer'],
-                    hovertemplate="Edad: %{y}<br>Accidentes:%{customdata}<br>Sexo:Mujer<extra></extra>",
-                    marker_color="#F2B950"))
-fig_gen2.add_trace(go.Bar(x=temp_df2["Hombre"].values,
-                    y=temp_df2['RangoEdad'],
-                    orientation='h',
-                    name='Hombre',
-                    hovertemplate="Edad: %{y}<br>Accidentes:%{x}<br>Sexo:Hombre<extra></extra>",
-                    marker_color="#011C40"))
-
-fig_gen2.update_layout(barmode='relative', 
-                 height=500, 
-                 width=400, 
-                 yaxis_autorange='reversed',
-                 bargap=0.01,
-                 legend_orientation='h',
-                 legend_x=0.07, legend_y=1.1)
-                     #,"z":"Tipo de Accidente"})
-fig_gen2.layout.plot_bgcolor = 'rgba(0,0,0,0)'
-fig_gen2.layout.paper_bgcolor = 'rgba(0,0,0,0)'                     
-                     
-fig_sem.update_layout(font=dict(size = 11), height = 500)
-fig_sem.update_traces(marker_color=1)
-#Buttoms
-Tipo_acc = [
-    {"label":'Heridos', "value":"ACT"},
-    {"label":'Fallecidos', "value":"OBSE"}
-]
-
 
 # specific layout for this page
 layout = dbc.Container(
